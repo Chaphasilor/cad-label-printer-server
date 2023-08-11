@@ -47,6 +47,7 @@ router.post(`/uploadFile`, async (ctx, next) => {
     ctx.body = {
       error: `missing property: \`content\``
     }
+    return
   }
 
   try {
@@ -71,9 +72,11 @@ router.post(`/uploadFile`, async (ctx, next) => {
     }
     
   } catch (err) {
+    console.error(`Error while uploading file to printer:`, err)
     ctx.status = 500
     ctx.body = {
-      error: `couldn't upload file to printer`
+      error: `couldn't upload file to printer`,
+      message: err,
     }
   }
   
